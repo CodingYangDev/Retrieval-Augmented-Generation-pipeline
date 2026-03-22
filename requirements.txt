@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pymilvus
+pymongo
+redis
+sentence-transformers
+rank-bm25
+jieba
+streamlit
+requests
