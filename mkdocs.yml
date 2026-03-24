@@ -2,10 +2,11 @@ site_name: RAG 系统教程
 theme:
   name: material
   features:
-    - navigation.sections
-    - navigation.top
-    - search.suggest
-    - search.highlight
+    - navigation.sections      # 让导航分组可折叠（主项点击展开/收起子项）
+    - navigation.instant       # 页面无刷新切换，消除滚动抖动
+    - navigation.top           # 返回顶部按钮
+    - search.suggest           # 搜索建议
+    - search.highlight         # 搜索高亮
   palette:
     - scheme: default
       primary: indigo
@@ -48,7 +49,3 @@ nav:
     - 评估方法: query_rewriting/evaluation.md
   - 首页: index.md
   - 贡献指南: contributing.md
-plugins:
-  - search:
-      lang: en
-
