@@ -75,6 +75,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#parent-child-rag" class="md-skip">
+          跳转至
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -451,6 +456,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    父子模式切片
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -468,6 +493,252 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 设计思路
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 结构示意（静态）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 执行流程（动态）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 数据结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 数据结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#child" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Child
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 核心实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 核心实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 构建父子块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 滑动窗口切片
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 切片方式说明
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 检索流程（工程视角）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 参数建议
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 常见问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 常见问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 为什么不直接用大块？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 为什么不只用小块？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-overlap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. overlap 有必要吗？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-parent_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 为什么需要 parent_id？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1051,6 +1322,243 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 背景
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 设计思路
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 结构示意（静态）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 执行流程（动态）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 数据结构
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 数据结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#child" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Child
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 核心实现
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 核心实现">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 构建父子块
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 滑动窗口切片
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 切片方式说明
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 检索流程（工程视角）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 参数建议
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 常见问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 常见问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 为什么不直接用大块？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 为什么不只用小块？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-overlap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. overlap 有必要吗？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-parent_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 为什么需要 parent_id？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1067,9 +1575,262 @@
 
 
 
-  <h1>父子模式切片</h1>
+<h1 id="parent-child-rag">Parent-Child 分块策略（RAG 实践）</h1>
+<h2 id="1">1. 背景</h2>
+<p>在 RAG 系统中，分块策略会直接影响两件事：</p>
+<ul>
+<li>检索是否准确</li>
+<li>生成是否完整</li>
+</ul>
+<p>常见问题：</p>
+<ul>
+<li>分块太小：检索准，但上下文不够，LLM 无法理解完整语义</li>
+<li>分块太大：上下文完整，但 embedding 表达能力下降，检索精度变差</li>
+</ul>
+<p>需要在两者之间做权衡。</p>
+<hr />
+<h2 id="2">2. 设计思路</h2>
+<p>采用分层结构：</p>
+<ul>
+<li>Child（子块）：用于向量检索</li>
+<li>Parent（父块）：用于提供上下文</li>
+</ul>
+<p>核心原则：</p>
+<blockquote>
+<p>用小块找到内容，用大块交给模型生成</p>
+</blockquote>
+<hr />
+<h2 id="3">3. 结构示意（静态）</h2>
+<pre class="mermaid"><code>graph TD
+    A[原始文本] --&gt; B[Parent 切分]
+
+    B --&gt; C1[Parent 1]
+    B --&gt; C2[Parent 2]
+
+    C1 --&gt; D1[Child 1.1]
+    C1 --&gt; D2[Child 1.2]
+
+    C2 --&gt; D3[Child 2.1]
+    C2 --&gt; D4[Child 2.2]
+
+    D1 --&gt; E[向量检索]
+    D2 --&gt; E
+    D3 --&gt; E
+
+    E --&gt; F[命中 Child]
+    F --&gt; G[通过 parent_id 查 Parent]
+    G --&gt; H[拼接上下文]
+    H --&gt; I[生成结果]</code></pre>
+<hr />
+<h2 id="4">4. 执行流程（动态）</h2>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Text as 原始文本
+    participant Parent as Parent 切分
+    participant Child as Child 切分
+    participant Vec as 向量检索
+    participant Store as Parent 存储
+    participant LLM as 生成模型
+
+    Text-&gt;&gt;Parent: 切分 Parent（大块）
+    Parent-&gt;&gt;Child: 每个 Parent 再切 Child（小块）
+
+    Child-&gt;&gt;Vec: 写入向量数据库
+    Parent-&gt;&gt;Store: 写入文档存储
+
+    Vec-&gt;&gt;Vec: 查询 Top-K Child
+    Vec-&gt;&gt;Store: 获取 parent_id
+
+    Store-&gt;&gt;LLM: 返回 Parent
+    LLM-&gt;&gt;LLM: 拼接上下文
+    LLM--&gt;&gt;Text: 生成答案</code></pre>
+<hr />
+<h2 id="5">5. 数据结构</h2>
+<h3 id="parent">Parent</h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;parent_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uuid&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;text&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;完整文本块&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="child">Child</h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;chunk&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;子块内容&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;parent_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;uuid&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>关键点：</p>
+<ul>
+<li>Child 存入向量数据库</li>
+<li>Parent 存入文档存储</li>
+<li>通过 parent_id 建立关联</li>
+</ul>
+<hr />
+<h2 id="6">6. 核心实现</h2>
+<h3 id="61">6.1 构建父子块</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">core.chunking.sliding_window</span><span class="w"> </span><span class="kn">import</span> <span class="n">sliding_window_chunk</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">build_hierarchical_chunks</span><span class="p">(</span>
+    <span class="n">text</span><span class="p">,</span>
+    <span class="n">parent_chunk_size</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span>
+    <span class="n">parent_overlap</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">child_chunk_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">child_overlap</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">):</span>
+    <span class="n">parents</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># 1. 切 Parent</span>
+    <span class="n">parent_chunks</span> <span class="o">=</span> <span class="n">sliding_window_chunk</span><span class="p">(</span>
+        <span class="n">text</span><span class="p">,</span>
+        <span class="n">chunk_size</span><span class="o">=</span><span class="n">parent_chunk_size</span><span class="p">,</span>
+        <span class="n">overlap</span><span class="o">=</span><span class="n">parent_overlap</span>
+    <span class="p">)</span>
+
+    <span class="c1"># 2. 每个 Parent 再切 Child</span>
+    <span class="k">for</span> <span class="n">parent_text</span> <span class="ow">in</span> <span class="n">parent_chunks</span><span class="p">:</span>
+        <span class="n">parent_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+        <span class="n">parents</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;parent_id&quot;</span><span class="p">:</span> <span class="n">parent_id</span><span class="p">,</span>
+            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">parent_text</span>
+        <span class="p">})</span>
+
+        <span class="n">child_chunks</span> <span class="o">=</span> <span class="n">sliding_window_chunk</span><span class="p">(</span>
+            <span class="n">parent_text</span><span class="p">,</span>
+            <span class="n">chunk_size</span><span class="o">=</span><span class="n">child_chunk_size</span><span class="p">,</span>
+            <span class="n">overlap</span><span class="o">=</span><span class="n">child_overlap</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">child_text</span> <span class="ow">in</span> <span class="n">child_chunks</span><span class="p">:</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s2">&quot;chunk&quot;</span><span class="p">:</span> <span class="n">child_text</span><span class="p">,</span>
+                <span class="s2">&quot;parent_id&quot;</span><span class="p">:</span> <span class="n">parent_id</span>
+            <span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">parents</span><span class="p">,</span> <span class="n">children</span>
+</code></pre></div>
+<hr />
+<h3 id="62">6.2 滑动窗口切片</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sliding_window_chunk</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">text_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">text_length</span><span class="p">:</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">chunk_size</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+
+        <span class="c1"># 滑动窗口</span>
+        <span class="n">start</span> <span class="o">+=</span> <span class="n">chunk_size</span> <span class="o">-</span> <span class="n">overlap</span>
+
+    <span class="k">return</span> <span class="n">chunks</span>
+</code></pre></div>
+<hr />
+<h2 id="7">7. 切片方式说明</h2>
+<div class="highlight"><pre><span></span><code>原始文本：
+
+[-------------------------]
+
+chunk_size = 300
+overlap = 50
+
+切分结果：
+
+[------1------]
+       [------2------]
+              [------3------]
+</code></pre></div>
+<p>说明：</p>
+<ul>
+<li>每个块之间存在重叠</li>
+<li>避免语义断裂</li>
+<li>提高 embedding 连续性</li>
+</ul>
+<hr />
+<h2 id="8">8. 检索流程（工程视角）</h2>
+<pre class="mermaid"><code>graph LR
+    A[用户问题] --&gt; B[Embedding]
+    B --&gt; C[向量检索 Child]
+
+    C --&gt; D1[命中 Child1]
+    C --&gt; D2[命中 Child2]
+
+    D1 --&gt; E[获取 parent_id]
+    D2 --&gt; E
+
+    E --&gt; F[查询 Parent]
+
+    F --&gt; G[拼接上下文]
+    G --&gt; H[LLM 生成答案]</code></pre>
+<p>执行步骤：</p>
+<ol>
+<li>Query → embedding</li>
+<li>向量检索 Top-K Child</li>
+<li>提取 parent_id（去重）</li>
+<li>查询 Parent</li>
+<li>拼接上下文</li>
+<li>输入 LLM 生成结果</li>
+</ol>
+<hr />
+<h2 id="9">9. 参数建议</h2>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>建议值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>parent_chunk_size</td>
+<td>800 ~ 1500</td>
+<td>保证上下文完整</td>
+</tr>
+<tr>
+<td>child_chunk_size</td>
+<td>200 ~ 400</td>
+<td>提高检索精度</td>
+</tr>
+<tr>
+<td>overlap</td>
+<td>10% ~ 20%</td>
+<td>防止语义断裂</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10">10. 常见问题</h2>
+<h3 id="1_1">1. 为什么不直接用大块？</h3>
+<p>embedding 精度下降，检索不准确。</p>
+<hr />
+<h3 id="2_1">2. 为什么不只用小块？</h3>
+<p>上下文不完整，LLM 容易答非所问。</p>
+<hr />
+<h3 id="3-overlap">3. overlap 有必要吗？</h3>
+<p>有。</p>
+<p>可以避免句子截断，提高语义连续性。</p>
+<hr />
+<h3 id="4-parent_id">4. 为什么需要 parent_id？</h3>
+<p>用于在检索阶段从 Child 映射回 Parent。</p>
+<hr />
+<h2 id="11">11. 小结</h2>
+<ul>
+<li>Child → 提高检索精度</li>
+<li>Parent → 保证生成质量</li>
+</ul>
+<p>本质是：</p>
+<blockquote>
+<p>将“检索”和“生成”解耦</p>
+</blockquote>
+<p>适用于：</p>
+<ul>
+<li>长文档</li>
+<li>企业知识库</li>
+<li>RAG 系统</li>
+</ul>
 
 
 
@@ -1129,6 +1890,10 @@
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.js"></script>
       
     
   </body>
