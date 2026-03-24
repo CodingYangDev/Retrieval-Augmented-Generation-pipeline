@@ -48,3 +48,6 @@ nav:
     - 评估方法: query_rewriting/evaluation.md
   - 首页: index.md
   - 贡献指南: contributing.md
+plugins:
+  - search:
+      lang: en
