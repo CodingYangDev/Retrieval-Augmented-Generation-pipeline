@@ -1,192 +1,142 @@
-```
 # Retrieval-Augmented Generation (RAG) 系统
 
-基于父-子分块、语义化分块等常见分块策略以及向量检索与大语言模型的 RAG 实现。支持上传文档，自动分片、向量化并存储，通过自然语言查询获取增强生成结果。
+> 一个完整的 RAG 实现，支持多种分块策略、查询重写、混合检索、重排序与提示词工程。上传 PDF、Word、Markdown 等文档，自动解析、向量化，通过自然语言查询获取增强生成结果。
 
-## 功能特性
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/downloads/)
+[![Docker](https://img.shields.io/badge/docker-compose-blue)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Docs](https://img.shields.io/badge/docs-online-brightgreen)](https://codingyangdev.github.io/Retrieval-Augmented-Generation-pipeline/)
 
-- 父子分块策略：大块保留完整语境，小块用于精确检索
-- 双存储引擎：父块存入 MongoDB，子块向量存入 Milvus
-- 混合检索：向量检索 + BM25 关键词检索（可选）
-- 文件上传接口：自动分片、入库并返回分片详情
-- 查询接口：返回检索到的上下文及生成答案
-- Docker 一键部署：整合 Milvus、MongoDB、Redis
+---
 
-## 技术栈
+## 📌 项目介绍
 
-| 组件           | 技术                              |
-| -------------- | --------------------------------- |
-| Web 框架       | FastAPI                           |
-| 向量数据库     | Milvus (with etcd + MinIO)        |
-| 文档数据库     | MongoDB                           |
-| 缓存/会话      | Redis                             |
-| 嵌入模型       | BAAI/bge-small-zh (512 维)        |
-| 重排序模型     | BAAI/bge-reranker-base            |
-| 部署           | Docker Compose                    |
+做文档问答时，我们通常会遇到这些难题：
 
-## 快速开始
+- **文档怎么切**才能既保留完整语境又保证检索精度？
+- **用户问题表达模糊**时，如何让检索更准确？
+- **检索到的片段**如何筛选排序，选出最相关的内容？
+- **怎么设计提示词**让大模型生成更可靠的答案？
+
+这个项目提供了一套完整的 RAG 解决方案，覆盖从文档处理到答案生成的每一个关键环节：
+
+- **灵活的分块策略**：固定 Token、父子分块、语义分块，按需选择
+- **查询理解与重写**：改写用户问题，提升检索命中率
+- **混合检索**：向量检索 + BM25 关键词检索，取长补短
+- **重排序 (Rerank)**：对召回结果二次排序，筛选最相关内容
+- **提示词工程**：精心设计的提示词模板，引导大模型生成高质量回答
+
+支持 txt、pdf、doc/docx、markdown 等常见文档格式，上传后自动解析、分块、向量化并存入 Milvus 和 MongoDB，通过 HTTP 接口进行问答。
+
+> 📚 **完整教程请点击这里**：[在线阅读](https://codingyangdev.github.io/Retrieval-Augmented-Generation-pipeline/) —— 无需下载，随时随地学习
+
+---
+
+## ✨ 你将收获什么？
+
+- 📖 **开源免费**：MIT 协议，随意使用和学习
+- 🧩 **多种分块策略**：深入理解不同分块方式的原理与适用场景
+- ✍️ **查询重写技术**：学会如何改写用户问题以提升检索效果
+- 🔍 **混合检索实现**：掌握向量检索 + BM25 的融合策略
+- 🎯 **重排序优化**：使用 BGE-reranker 等模型提升相关性
+- 🧠 **提示词工程**：设计高质量提示词，让大模型生成更准确的答案
+- 🏗️ **亲手部署**：从零开始部署一套完整的 RAG 系统
+- 📄 **多格式文档解析**：掌握 PDF、Word、Markdown 等文档的解析技巧
+- 🚀 **实战驱动**：通过 API 快速集成到自己的应用中
+
+---
+
+## 🚀 快速开始
 
 ### 前置要求
-
 - Docker & Docker Compose
 - Python 3.10+
 - 至少 4GB 可用内存
 
 ### 1. 克隆项目
-
 ```bash
 git clone https://github.com/CodingYangDev/Retrieval-Augmented-Generation-pipeline.git
 cd Retrieval-Augmented-Generation-pipeline
 ```
 
-### 2. 配置环境变量
-
-复制环境变量模板并修改：
-
-```bash
-cp .env.example .env
-```
-
-编辑 `.env` 文件，填写必要的配置（如 Milvus 地址、MongoDB URI 等）。若无 `.env.example`，可手动创建并参考下方配置说明。
-
-### 3. 启动基础服务（Milvus + MongoDB + Redis）
-
+### 2. 启动依赖服务
 ```bash
 docker-compose up -d
 ```
 
-等待所有容器健康启动（约 30 秒）。
-
-### 4. 安装 Python 依赖
-
+### 3. 安装依赖并运行
 ```bash
 pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-### 5. 启动应用
+启动后访问 `http://localhost:8000/docs` 查看 API 文档。
 
-```bash
-uvicorn app.main:app --reload
+> 详细的部署步骤、环境变量配置、生产环境部署等，请查看[完整教程](https://codingyangdev.github.io/Retrieval-Augmented-Generation-pipeline/)。
+
+---
+
+## 📚 教程导航
+
+我们的[在线教程](https://codingyangdev.github.io/Retrieval-Augmented-Generation-pipeline/)包含以下内容，建议按顺序学习：
+
+| 章节 | 内容简介 |
+| --- | --- |
+| **快速开始** | 环境配置、Docker 启动、运行第一个查询 |
+| **分块策略详解** | 固定 Token、父子分块、语义分块的原理与选型建议 |
+| **文档解析支持** | PDF、Word、Markdown、TXT 的解析实现 |
+| **MongoDB 使用指南** | 父块存储、文档管理、索引优化 |
+| **Milvus 向量数据库使用** | 向量集合管理、索引构建、检索优化 |
+| **查询理解与重写** | 如何改写用户问题以提升检索效果 |
+| **混合检索与重排序** | 向量检索、BM25、RRF 融合排序、重排序模型应用 |
+| **大模型调用与提示词工程** | 提示词模板设计、模型调用、答案生成 |
+| **API 调用示例** | curl 和 Python 调用上传、查询接口的完整示例 |
+| **自定义扩展** | 自定义分块策略、自定义检索器 |
+| **生产环境部署** | Docker 单独部署、性能调优、监控配置 |
+
+---
+
+## 🛠 技术栈
+
+| 组件 | 技术 |
+| --- | --- |
+| Web 框架 | FastAPI |
+| 向量数据库 | Milvus (with etcd + MinIO) |
+| 文档数据库 | MongoDB |
+| 缓存/会话 | Redis |
+| 文档解析 | PyPDF2, python-docx, markdown |
+| 嵌入模型 | BAAI/bge-small-zh (512 维) |
+| 重排序模型 | BAAI/bge-reranker-base |
+| 检索策略 | 向量检索 + BM25 + RRF 融合 |
+| 大模型 | OpenAI API / 本地模型（可扩展） |
+| 部署 | Docker Compose |
+
+---
+
+## 🤝 如何贡献
+
+欢迎任何形式的贡献！如果你有新的分块策略想尝试，或者发现了 bug，欢迎提 PR 或 Issue。
+
+1. Fork 这个仓库
+2. 创建你的功能分支 (`git checkout -b feature/amazing-feature`)
+3. 提交你的改动 (`git commit -m 'Add some amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 打开一个 Pull Request
+
+如果你不确定如何修改，可以先开一个 Issue 讨论。
+
+---
+
+
+
+
+如果这个项目对你有帮助，欢迎点个 ⭐️ Star 支持一下～
 ```
 
-服务将在 `http://localhost:8000` 运行。
+---
 
-## 使用说明
-
-### 上传文档
-
-通过 `/upload` 接口上传 `.txt` 文件，系统会自动：
-
-1. 将文档切分为父块（1200 字符）和子块（300 字符）
-2. 子块向量化（512 维）
-3. 父块存入 MongoDB，子块向量存入 Milvus
-4. 返回分片统计及详细内容
-
-**示例请求（使用 curl）：**
-
-```bash
-curl -X POST "http://localhost:8000/upload" -F "file=@/path/to/your/document.txt"
-```
-
-**响应示例：**
-
-```json
-{
-  "filename": "document.txt",
-  "message": "文件已处理并入库",
-  "parent_count": 2,
-  "child_count": 9,
-  "parents": [],
-  "children": []
-}
-```
-
-### 查询
-
-通过 `/query` 接口提交问题，系统将：
-
-1. 将问题向量化
-2. 在 Milvus 中检索最相关的子块
-3. 根据 `parent_id` 获取完整父块上下文
-4. 结合大模型生成答案（需配置 LLM）
-
-**示例请求：**
-
-```bash
-curl "http://localhost:8000/query?q=什么是意识？"
-```
-
-**响应示例：**
-
-```json
-{
-  "query": "什么是意识？",
-  "context": ["相关父块文本..."],
-  "answer": "生成的答案..."
-}
-```
-
-## 可视化工具
-
-### Milvus 可视化管理：Attu
-
-Attu 是 Milvus 官方提供的图形化管理工具，可用于浏览集合、查看向量数据、执行查询。
-
-- **启动 Attu**（需确保 Milvus 容器已运行）：
-  ```bash
-  docker run -d --name attu -p 8000:3000 -e MILVUS_URL=host.docker.internal:19530 zilliz/attu:latest
-  ```
-- **访问**：`http://localhost:8000`
-- **连接设置**：
-  - Milvus 地址：`host.docker.internal:19530`（或你的宿主机 IP）
-  - 认证：无需用户名密码（默认未开启）
-- **用途**：查看集合 `rag_collection` 中的子块文本、向量、`parent_id` 等。
-
-### MongoDB 可视化管理：MongoDB Compass
-
-MongoDB Compass 是官方免费图形化客户端，用于查看、查询、管理 MongoDB 数据。
-
-- **安装**：从 [MongoDB 官网](https://www.mongodb.com/products/compass) 下载安装。
-- **连接**：`mongodb://localhost:27017`
-- **用途**：查看父块集合，通过 `parent_id` 关联查询。
-
-### Redis 可视化管理：Redis Insight
-
-Redis Insight 是 Redis 官方图形化工具，方便查看缓存数据。
-
-- **安装**：从 [Redis 官网](https://redis.com/redis-insight/) 下载。
-- **连接**：`localhost:6379`
-- **用途**：监控缓存键值、查看 BM25 检索中间结果等。
-
-## 配置说明
-
-| 环境变量 | 说明 | 默认值 |
-|----------|------|--------|
-| `MILVUS_HOST` | Milvus 服务地址 | `localhost` |
-| `MILVUS_PORT` | Milvus 端口 | `19530` |
-| `MONGO_URI` | MongoDB 连接字符串 | `mongodb://localhost:27017` |
-| `REDIS_HOST` | Redis 主机 | `localhost` |
-| `REDIS_PORT` | Redis 端口 | `6379` |
-| `EMBEDDING_MODEL` | 嵌入模型名称 | `BAAI/bge-small-zh` |
-| `RERANKER_MODEL` | 重排序模型名称 | `BAAI/bge-reranker-base` |
-
-## 性能调优建议
-
-- 根据文档类型调整 `parent_chunk_size` 和 `child_chunk_size`（在 `parent_child.py` 中修改）
-- 数据量增大时，可将 Milvus 索引从 `IVF_FLAT` 更换为 `HNSW` 以提升检索速度
-- 使用 `nprobe` 参数平衡检索精度与延迟
-
-## 未来计划
-
-- 支持更多文档格式（PDF、Markdown、Word）
-- 集成大模型（如 OpenAI API、本地模型）
-- 添加前端交互界面
-- 支持多租户与数据隔离
-- 增加监控与指标收集
-
-## 贡献指南
-
-欢迎提交 Issue 和 Pull Request。请确保代码符合 PEP8 规范，并添加必要的测试。
-
-
-
+**修改说明**：
+1. **项目介绍**部分加入了“查询理解与重写”“重排序”“提示词工程”的描述，突出全流程。
+2. **你将收获什么**列表增加了查询重写、混合检索、重排序、提示词工程等条目。
+3. **教程导航**表格中，“查询理解与重写”“混合检索与重排序”“大模型调用与提示词工程”独立成行，明确展示。
+4. **技术栈**补充了检索策略（向量+BM25+RRF）和大模型选项。

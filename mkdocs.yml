@@ -1,12 +1,14 @@
 site_name: RAG 系统教程
+
 theme:
   name: material
   features:
-    - navigation.sections      # 让导航分组可折叠（主项点击展开/收起子项）
-    - navigation.instant       # 页面无刷新切换，消除滚动抖动
-    - navigation.top           # 返回顶部按钮
-    - search.suggest           # 搜索建议
-    - search.highlight         # 搜索高亮
+    # ❌ 删除 navigation.expand
+    - navigation.instant
+    - navigation.top
+    - search.suggest
+    - search.highlight
+
   palette:
     - scheme: default
       primary: indigo
@@ -20,32 +22,39 @@ theme:
       toggle:
         icon: material/brightness-4
         name: 切换至亮色模式
+
   language: zh
 
 docs_dir: docs
 
 nav:
-  - 文件解析:
-    - 概述: file_parsing/overview.md
-    - 支持的格式: file_parsing/supported_formats.md
-    - 解析器配置: file_parsing/parser_config.md
-  - 切片策略:
-    - 父子模式切片: chunking/parent_child.md
-    - 语义化切片: chunking/semantic.md
-    - 固定Token切片: chunking/fixed_token.md
-  - 向量数据库的选择:
-    - 概述: vector_db/overview.md
-    - Milvus: vector_db/milvus.md
-    - Qdrant: vector_db/qdrant.md
-    - Chroma: vector_db/chroma.md
-    - 性能对比: vector_db/comparison.md
-  - 检索生成:
-    - 检索流程: retrieval/pipeline.md
-    - 生成模型接入: retrieval/generation.md
-    - 融合检索与生成: retrieval/rag.md
-  - 用户的query重写:
-    - 查询理解: query_rewriting/understanding.md
-    - 改写策略: query_rewriting/strategies.md
-    - 评估方法: query_rewriting/evaluation.md
   - 首页: index.md
+
+  - 文件解析:
+      - 概述: file_parsing/overview.md
+      - 支持的格式: file_parsing/supported_formats.md
+      - 解析器配置: file_parsing/parser_config.md
+
+  - 切片策略:
+      - 父子模式切片: chunking/parent_child.md
+      - 语义化切片: chunking/semantic.md
+      - 固定Token切片: chunking/fixed_token.md
+
+  - 向量数据库的选择:
+      - 概述: vector_db/overview.md
+      - Milvus: vector_db/milvus.md
+      - Qdrant: vector_db/qdrant.md
+      - Chroma: vector_db/chroma.md
+      - 性能对比: vector_db/comparison.md
+
+  - 检索生成:
+      - 检索流程: retrieval/pipeline.md
+      - 生成模型接入: retrieval/generation.md
+      - 融合检索与生成: retrieval/rag.md
+
+  - 用户的query重写:
+      - 查询理解: query_rewriting/understanding.md
+      - 改写策略: query_rewriting/strategies.md
+      - 评估方法: query_rewriting/evaluation.md
+
   - 贡献指南: contributing.md
