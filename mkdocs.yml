@@ -2,9 +2,8 @@ site_name: RAG 系统教程
 theme:
   name: material
   features:
-    # 移除 navigation.tabs，只保留 sections 等实现侧边栏折叠效果
-    - navigation.sections      # 使导航项可折叠（相当于下拉菜单）
-    - navigation.top           # 显示返回顶部按钮
+    - navigation.sections      # 可折叠导航（类似下拉菜单）
+    - navigation.top           # 返回顶部按钮
     - search.suggest           # 搜索建议
     - search.highlight         # 搜索高亮
   palette:
@@ -22,40 +21,30 @@ theme:
         name: 切换至亮色模式
   language: zh
 
+docs_dir: docs                     # 文档目录（确保与实际一致）
+
 nav:
-  # 文件解析
   - 文件解析:
-    - 概述: docs/file_parsing/overview.md
-    - 支持的格式: docs/file_parsing/supported_formats.md
-    - 解析器配置: docs/file_parsing/parser_config.md
-    # 可根据需要添加更多子文档
-
-  # 切片策略
+    - 概述: file_parsing/overview.md
+    - 支持的格式: file_parsing/supported_formats.md
+    - 解析器配置: file_parsing/parser_config.md
   - 切片策略:
-    - 父子模式切片: docs/chunking/parent_child.md
-    - 语义化切片: docs/chunking/semantic.md
-    - 固定Token切片: docs/chunking/fixed_token.md
-
-  # 向量数据库的选择
+    - 父子模式切片: chunking/parent_child.md
+    - 语义化切片: chunking/semantic.md
+    - 固定Token切片: chunking/fixed_token.md
   - 向量数据库的选择:
-    - 概述: docs/vector_db/overview.md
-    - Milvus: docs/vector_db/milvus.md
-    - Qdrant: docs/vector_db/qdrant.md
-    - Chroma: docs/vector_db/chroma.md
-    - 性能对比: docs/vector_db/comparison.md
-
-  # 检索生成
+    - 概述: vector_db/overview.md
+    - Milvus: vector_db/milvus.md
+    - Qdrant: vector_db/qdrant.md
+    - Chroma: vector_db/chroma.md
+    - 性能对比: vector_db/comparison.md
   - 检索生成:
-    - 检索流程: docs/retrieval/pipeline.md
-    - 生成模型接入: docs/retrieval/generation.md
-    - 融合检索与生成: docs/retrieval/rag.md
-
-  # 用户的query重写
+    - 检索流程: retrieval/pipeline.md
+    - 生成模型接入: retrieval/generation.md
+    - 融合检索与生成: retrieval/rag.md
   - 用户的query重写:
-    - 查询理解: docs/query_rewriting/understanding.md
-    - 改写策略: docs/query_rewriting/strategies.md
-    - 评估方法: docs/query_rewriting/evaluation.md
-
-  # 其他页面（可选）
+    - 查询理解: query_rewriting/understanding.md
+    - 改写策略: query_rewriting/strategies.md
+    - 评估方法: query_rewriting/evaluation.md
   - 首页: index.md
   - 贡献指南: contributing.md
