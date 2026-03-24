@@ -1,26 +1,8 @@
-# 虚拟环境
+site/
+.env
 .venv/
-venv/
-env/
-ENV/
-
-# Python 缓存
 __pycache__/
 *.pyc
-*.pyo
 
-# 配置文件（包含敏感信息）
-.env
-config/local_settings.py
-
-# 日志文件
-*.log
-
-# IDE 配置
-.vscode/
-.idea/
-
-# 临时文件
-*.tmp
-*.swp
-*.swo
+# 数据库（你这个很关键）
+volumes/
