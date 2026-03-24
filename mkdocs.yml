@@ -1,5 +1,5 @@
 site_name: RAG 系统教程
-
+site_url: https://CodingYangDev.github.io/Retrieval-Augmented-Generation-pipeline/
 theme:
   name: material
   features:
@@ -58,3 +58,14 @@ nav:
       - 评估方法: query_rewriting/evaluation.md
 
   - 贡献指南: contributing.md
+
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
+  - javascripts/mermaid.js

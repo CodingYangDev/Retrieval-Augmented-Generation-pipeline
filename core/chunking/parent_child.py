@@ -19,7 +19,7 @@ def build_hierarchical_chunks(
     child_overlap=50
 ):
     """
-    构建企业级父子块结构
+    构建父子块结构
 
     返回：
     parents: List[dict]
