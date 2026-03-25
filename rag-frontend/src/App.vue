@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card class="main-card" shadow="never">
 
-      <!-- 头 -->
+      <!-- 头部 -->
       <div class="header">
         <div>
           <h1 class="title">RAG 智能系统</h1>
@@ -12,11 +12,11 @@
 
       <el-tabs v-model="activeTab">
 
-        <!-- 上传 -->
+        <!-- 上传与切片 Tab -->
         <el-tab-pane label="上传与切片" name="upload">
           <div class="upload-layout">
 
-            <!-- 左 -->
+            <!-- 左侧配置 -->
             <div class="config-panel">
               <div class="panel-title">分块策略</div>
 
@@ -29,7 +29,7 @@
 
               <div class="divider"></div>
 
-              <!-- 父子 -->
+              <!-- 父子模式 -->
               <div v-if="chunkMethod==='parent_child' || chunkMethod==='hybrid'">
                 <div class="param">
                   <span>父块大小</span>
@@ -49,7 +49,7 @@
                 </div>
               </div>
 
-              <!-- fixed -->
+              <!-- 固定模式 -->
               <div v-if="chunkMethod==='fixed' || chunkMethod==='hybrid'">
                 <div class="param">
                   <span>固定大小</span>
@@ -61,7 +61,7 @@
                 </div>
               </div>
 
-              <!-- semantic -->
+              <!-- 语义模式 -->
               <div v-if="chunkMethod==='semantic'">
                 <span>相似度</span>
                 <el-slider v-model="similarityThreshold"/>
@@ -69,9 +69,8 @@
 
             </div>
 
-            <!-- 右 -->
+            <!-- 右侧上传区域 -->
             <div class="upload-panel">
-
               <el-upload
                 drag
                 :auto-upload="false"
@@ -101,14 +100,14 @@
           </div>
         </el-tab-pane>
 
-        <!-- 查询 -->
+        <!-- 查询 Tab -->
         <el-tab-pane label="查询" name="query">
           <div class="query-box">
             <el-input v-model="queryText" type="textarea" :rows="3"/>
             <el-button type="primary" @click="handleQuery">查询</el-button>
 
             <div v-if="queryResult">
-              {{ queryResult.answer }}
+              <p>{{ queryResult.answer }}</p>
             </div>
           </div>
         </el-tab-pane>
@@ -128,15 +127,12 @@ const API_BASE_URL = 'http://localhost:8001'
 const activeTab = ref('upload')
 
 const chunkMethod = ref('parent_child')
-
 const parentSize = ref(1200)
 const parentOverlap = ref(200)
 const childSize = ref(300)
 const childOverlap = ref(50)
-
 const fixedSize = ref(500)
 const fixedOverlap = ref(50)
-
 const similarityThreshold = ref(0.6)
 
 const selectedFile = ref(null)
@@ -216,35 +212,47 @@ const handleQuery = async () => {
 }
 
 .main-card {
-  border-radius: 12px;
+  border-radius: 16px;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.1);
 }
 
 .header {
   padding: 16px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #ececec;
 }
 
 .title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .subtitle {
-  font-size: 12px;
-  color: #888;
+  font-size: 14px;
+  color: #a0a0a0;
 }
 
 .upload-layout {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 24px;
 }
 
 .config-panel {
-  background: #fafafa;
-  padding: 15px;
-  border-radius: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.divider {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 16px 0;
 }
 
 .param {
@@ -254,12 +262,37 @@ const handleQuery = async () => {
 }
 
 .upload-panel {
-  padding: 10px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.upload-panel .el-upload {
+  border: 2px dashed #d1d5db;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+.upload-panel .el-button {
+  margin-top: 16px;
 }
 
 .query-box {
-  max-width: 600px;
-  margin: auto;
+  max-width: 700px;
+  margin: 40px auto;
   padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+.query-box .el-input,
+.query-box .el-button {
+  margin-top: 12px;
+}
+
+.query-box .el-button {
+  width: 120px;
 }
 </style>
