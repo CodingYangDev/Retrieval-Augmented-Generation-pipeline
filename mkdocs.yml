@@ -38,7 +38,9 @@ nav:
   - 切片策略:
       - 父子模式切片: chunking/parent_child.md
       - 语义化切片: chunking/semantic.md
+      - 混合分块: chunking/hybridchunking.md
       - 固定Token切片: chunking/fixed_token.md
+
 
   - 向量数据库的选择:
       - 概述: vector_db/overview.md

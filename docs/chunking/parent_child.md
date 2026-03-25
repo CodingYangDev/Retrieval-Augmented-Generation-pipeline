@@ -114,7 +114,7 @@ sequenceDiagram
 ## 6. 核心实现
 
 ### 6.1 构建父子块
-
+# 项目文件:core/chunking/parent_child.py
 ```python
 import uuid
 from core.chunking.sliding_window import sliding_window_chunk
@@ -164,7 +164,7 @@ def build_hierarchical_chunks(
 ---
 
 ### 6.2 滑动窗口切片
-
+# 项目文件:core/chunking/sliding_window.py
 ```python
 def sliding_window_chunk(text, chunk_size=300, overlap=50):
     chunks = []

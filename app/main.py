@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import chardet
 import json
 
+from core.parser.DocumentParser import DocumentParser
 # 存储层
 from core.storage.milvus_store import MilvusStore
 from core.storage.mongo_store import MongoStore
@@ -111,106 +112,64 @@ def query(q: str):
     result = rag_pipeline.run(q)
     return result
 
+# 初始化解析器
+parser = DocumentParser()
+
 @app.post("/upload")
 async def upload_file(
     file: UploadFile = File(...),
     params: str = Form(...)
 ):
-    # 1. 校验文件类型
-    if not file.filename.endswith('.txt'):
-        raise HTTPException(status_code=400, detail="仅支持 .txt 文件")
-
-    # 2. 读取文件内容
+    # 1. 解析文件
     try:
-        raw = await file.read()
-        encoding = chardet.detect(raw)['encoding'] or 'utf-8'
-        text = raw.decode(encoding, errors='replace')
+        parsed = parser.parse(file)
+        text = parsed["text"]
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"文件读取失败: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"文件解析失败: {str(e)}")
 
-    # 3. 解析前端参数
+    # 2. 解析分块参数
     try:
         params_dict = json.loads(params)
     except json.JSONDecodeError:
         raise HTTPException(status_code=400, detail="参数格式错误")
 
     chunk_method = params_dict.get("chunk_method", "parent_child")
-    print(f"分块方式: {chunk_method}")
 
-    # 4. 分块
+    # 3. 根据选择的分块方法执行分块操作
     try:
         if chunk_method == "parent_child":
-            parent_size = params_dict.get("parent_size", 1200)
-            parent_overlap = params_dict.get("parent_overlap", 200)
-            child_size = params_dict.get("child_size", 300)
-            child_overlap = params_dict.get("child_overlap", 50)
+            # 父子模式分块逻辑
             parents, children = build_hierarchical_chunks(
                 text,
-                parent_chunk_size=parent_size,
-                parent_overlap=parent_overlap,
-                child_chunk_size=child_size,
-                child_overlap=child_overlap
+                parent_chunk_size=params_dict.get("parent_size", 1200),
+                parent_overlap=params_dict.get("parent_overlap", 200),
+                child_chunk_size=params_dict.get("child_size", 300),
+                child_overlap=params_dict.get("child_overlap", 50)
             )
-        elif chunk_method == "fixed":
-            chunk_size = params_dict.get("chunk_size", 500)
-            overlap = params_dict.get("overlap", 50)
-            parents, children = fixed_size_chunk(text, chunk_size, overlap)
         elif chunk_method == "semantic":
-            similarity_threshold = params_dict.get("similarity_threshold", 0.6)
-            parents, children = semantic_chunk(text, similarity_threshold)
+            # 语义化分块逻辑
+            parents, children = semantic_chunk(
+                text,
+                params_dict.get("similarity_threshold", 0.6)
+            )
         else:
             raise HTTPException(status_code=400, detail="不支持的分块方式")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"分片失败: {str(e)}")
 
-    print(f"父块数量: {len(parents)}")
-    print(f"子块数量: {len(children)}")
+    # 4. 存储父块到 MongoDB
+    for parent in parents:
+        mongo.save_parent(parent["parent_id"], parent["text"])
 
-    # 5. 父块存 MongoDB
-    try:
-        for parent in parents:
-            mongo.save_parent(parent["parent_id"], parent["text"])
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"父块入库失败: {str(e)}")
+    # 5. 向量化子块并存储到 Milvus
+    child_texts = [c["chunk"] for c in children]
+    child_parent_ids = [c["parent_id"] for c in children]
 
-    # 6. 子块向量化并存 Milvus
-    try:
-        child_texts = [c["chunk"] for c in children]
-        child_parent_ids = [c["parent_id"] for c in children]
+    embeddings = embedder.embed(child_texts)
+    milvus.insert(embeddings, child_texts, child_parent_ids)
 
-        print(f"子块文本数量: {len(child_texts)}")
-        print(f"父ID数量: {len(child_parent_ids)}")
-
-        embeddings = embedder.embed(child_texts)
-        print(f"向量数组形状: {embeddings.shape if hasattr(embeddings, 'shape') else 'unknown'}")
-        print(f"向量数量: {len(embeddings)}")
-
-        if len(embeddings) != len(child_texts):
-            raise HTTPException(
-                status_code=500,
-                detail=f"向量数量({len(embeddings)})与子块数量({len(child_texts)})不一致"
-            )
-
-        if hasattr(embeddings, 'shape') and len(embeddings.shape) == 2:
-            vector_dim = embeddings.shape[1]
-            print(f"向量维度: {vector_dim}")
-            # 如果维度与 Milvus 定义不符，可调整
-            # if vector_dim != 384: print("警告：维度不一致")
-
-        milvus.insert(embeddings, child_texts, child_parent_ids)
-        print("插入成功")
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        import traceback
-        traceback.print_exc()
-        raise HTTPException(status_code=500, detail=f"子块入库失败: {str(e)}\n{traceback.format_exc()}")
-
-    # 7. 返回结果
     return {
         "filename": file.filename,
-        "message": "文件已处理并入库",
         "parent_count": len(parents),
         "child_count": len(children),
         "parents": parents,

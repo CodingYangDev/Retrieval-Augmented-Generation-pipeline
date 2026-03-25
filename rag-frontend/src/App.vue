@@ -68,18 +68,22 @@
 
             <div class="upload-panel">
               <h3>📎 上传文件</h3>
+
+              <!-- ✅ 关键修改：支持多类型 -->
               <el-upload
                 class="upload-area"
                 drag
                 :auto-upload="false"
                 :on-change="handleFileChange"
                 :limit="1"
-                accept=".txt"
+                accept=".txt,.pdf,.docx,.pptx,.md,.xlsx"
               >
                 <el-icon class="upload-icon"><UploadFilled /></el-icon>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
                 <template #tip>
-                  <div class="el-upload__tip">仅支持 .txt 文本文件</div>
+                  <div class="el-upload__tip">
+                    支持 .txt / .pdf / .docx / .pptx / .md / .xlsx 文件
+                  </div>
                 </template>
               </el-upload>
 
@@ -119,7 +123,7 @@
           </div>
         </el-tab-pane>
 
-        <!-- 智能问答 Tab -->
+        <!-- 智能问答 Tab（不变） -->
         <el-tab-pane label="🔍 智能问答" name="query">
           <div class="query-container">
             <div class="retrieval-selector">
@@ -201,6 +205,18 @@ const querying = ref(false)
 const queryResult = ref(null)
 
 const handleFileChange = (file) => {
+  const allowedTypes = [
+    '.txt', '.pdf', '.docx', '.pptx', '.md', '.xlsx'
+  ]
+
+  const fileName = file.name.toLowerCase()
+  const isValid = allowedTypes.some(ext => fileName.endsWith(ext))
+
+  if (!isValid) {
+    ElMessage.error('不支持的文件类型')
+    return
+  }
+
   selectedFile.value = file.raw
 }
 
@@ -241,16 +257,11 @@ const handleUpload = async () => {
 
     formData.append('params', JSON.stringify(params))
 
-    const response = await axios.post(`${API_BASE_URL}/upload`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
+    const response = await axios.post(`${API_BASE_URL}/upload`, formData)
 
-    if (response.status === 200) {
-      uploadResult.value = response.data
-      ElMessage.success('切片入库成功')
-    } else {
-      ElMessage.error(`上传失败：${response.data.detail || '未知错误'}`)
-    }
+    uploadResult.value = response.data
+    ElMessage.success('切片入库成功')
+
   } catch (error) {
     console.error(error)
     ElMessage.error(error.response?.data?.detail || '请求异常')
@@ -276,233 +287,11 @@ const handleQuery = async () => {
       },
     })
 
-    if (response.status === 200) {
-      queryResult.value = response.data
-    } else {
-      ElMessage.error(`查询失败：${response.data.detail || '未知错误'}`)
-    }
+    queryResult.value = response.data
   } catch (error) {
-    console.error(error)
-    ElMessage.error(error.response?.data?.detail || '请求异常')
+    ElMessage.error('查询失败')
   } finally {
     querying.value = false
   }
 }
 </script>
-
-<style scoped>
-/* 样式与之前相同，无变化，此处省略（用户已有） */
-</style>
-
-<style scoped>
-.app-container {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 24px;
-}
-
-.main-card {
-  border-radius: 24px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid #eef2f6;
-}
-
-.title {
-  font-size: 28px;
-  font-weight: 700;
-  background: linear-gradient(120deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin: 0;
-}
-
-.subtitle {
-  font-size: 14px;
-  color: #6b7280;
-}
-
-.tabs {
-  margin-top: 0;
-}
-
-.upload-layout {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 32px;
-  padding: 24px;
-}
-
-.config-panel h3,
-.upload-panel h3 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #1f2937;
-}
-
-.method-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.method-label {
-  font-weight: 500;
-  color: #374151;
-  min-width: 70px;
-}
-
-.method-options {
-  flex: 1;
-}
-
-.params-group {
-  margin-top: 8px;
-  margin-bottom: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.param-item {
-  width: 100%;
-}
-
-.param-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  margin-bottom: 8px;
-}
-
-.param-hint {
-  font-size: 12px;
-  color: #9ca3af;
-  margin-top: 4px;
-}
-
-.upload-area {
-  border: 2px dashed #e2e8f0;
-  border-radius: 20px;
-  background: #fafbfc;
-  transition: all 0.2s;
-  margin-bottom: 20px;
-}
-
-.upload-area:hover {
-  border-color: #667eea;
-  background: #f5f3ff;
-}
-
-.upload-icon {
-  font-size: 48px;
-  color: #667eea;
-}
-
-.upload-btn {
-  width: 100%;
-  margin-top: 8px;
-}
-
-.result-section {
-  margin-top: 24px;
-}
-
-.chunk-item {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 12px;
-  border-left: 3px solid #cbd5e1;
-  transition: all 0.2s;
-}
-
-.chunk-item:hover {
-  border-left-color: #667eea;
-  background-color: #fefce8;
-}
-
-.chunk-meta {
-  font-family: monospace;
-  font-size: 12px;
-  color: #6b7280;
-  margin-bottom: 6px;
-}
-
-.chunk-text {
-  font-size: 14px;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.query-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 24px;
-}
-
-.retrieval-selector {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.retrieval-selector .label {
-  font-weight: 500;
-  color: #374151;
-}
-
-.query-input {
-  margin-bottom: 20px;
-}
-
-.query-actions {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.query-result {
-  margin-top: 24px;
-}
-
-.answer-card {
-  background: linear-gradient(120deg, #e0e7ff, #f9fafb);
-  border-left: 5px solid #667eea;
-  margin-bottom: 24px;
-}
-
-.card-header {
-  font-weight: 600;
-  font-size: 18px;
-}
-
-.answer-text {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #1f2937;
-  white-space: pre-wrap;
-}
-
-.docs-title {
-  font-weight: 600;
-  font-size: 18px;
-  margin: 20px 0 12px 0;
-  color: #1f2937;
-}
-</style>

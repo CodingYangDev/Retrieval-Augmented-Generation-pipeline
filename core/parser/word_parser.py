@@ -1,0 +1,10 @@
+from docx import Document
+from .base import BaseParser
+
+
+class WordParser(BaseParser):
+
+    def parse(self, file_path: str) -> str:
+        doc = Document(file_path)
+        texts = [p.text for p in doc.paragraphs if p.text.strip()]
+        return "\n".join(texts)
